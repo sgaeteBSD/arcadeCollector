@@ -1,0 +1,58 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+
+    
+    private Vector2 input;
+
+    private Character character;
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        character = GetComponent<Character>(); 
+    }
+
+    // Update is called once per frame
+    public void HandleUpdate()
+    {
+        if (!character.IsMoving)
+        {
+            //raw means val is always -1 or 1 (good for grid movement)
+            input.x = Input.GetAxisRaw("Horizontal");
+            input.y = Input.GetAxisRaw("Vertical");
+
+            //remove diagonal movement
+            if (input.x != 0) input.y = 0;
+
+            if (input != Vector2.zero)
+            {
+                StartCoroutine(character.Move(input/*, secondary action*/));
+            }
+        }
+        character.HandleUpdate();
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Interact();
+        }
+    }
+
+
+    void Interact()
+    {
+        var facingDir = new Vector3(character.Animator.MoveX, character.Animator.MoveY);
+        var interactPos = transform.position + facingDir;
+
+        // Debug.DrawLine(transform.position, interactPos, Color.red, 0.5f);
+
+        var collider = Physics2D.OverlapCircle(interactPos, 0.3f, GameLayers.i.InteractableLayer);
+        if (collider != null)
+        {
+            collider.GetComponent<Interactable>()?.Interact(transform);
+        }
+    }
+}
