@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UI; // Assuming this is still used for PlayDisplayManager if not modularized
 
 public class CraneController : MonoBehaviour
 {
@@ -13,8 +13,6 @@ public class CraneController : MonoBehaviour
     [Header("Plays")]
     public int maxPlays = 5;
     private int currentPlays;
-    // New: Array of GameObjects to represent the play counts, including 0
-    // Make sure to set the size in the Inspector to maxPlays + 1 (e.g., 6 for maxPlays=5)
     public GameObject[] playNumberDisplays; // Assign your PlayNumber_0, PlayNumber_1, ..., PlayNumber_5 GameObjects here
 
     [Header("Claw Parts")]
@@ -29,6 +27,12 @@ public class CraneController : MonoBehaviour
     public LayerMask grabbableLayer;
 
     public float clawOpenSpeed = 100f; // degrees per second
+    public float clawCloseSpeed = 100f; // Added for clarity
+
+    [Header("Grab Logic")]
+    public float grabStrength = 100f; // How much force or how "sticky" the grab is. Adjust this.
+    private GameObject grabbedObject = null; // Reference to the object currently grabbed
+
 
     private Vector3 startPosition;
     private bool isDropping = false;
@@ -66,73 +70,106 @@ public class CraneController : MonoBehaviour
     private IEnumerator DropClaw()
     {
         isDropping = true;
+        grabbedObject = null; // Reset grabbed object at the start of a new drop
         float targetY = transform.position.y - clawDropDistance;
         Vector3 startPos = transform.position;
 
         SetClawRotation(clawOpenAngle);
         yield return null;
 
-        while (transform.position.y > targetY)
+        // --- Phase 1: Descend & Attempt Immediate Grab on Contact ---
+        bool contactMadeDuringDescent = false;
+        while (transform.position.y > targetY && !contactMadeDuringDescent)
         {
             transform.position += Vector3.down * clawMoveSpeed * Time.deltaTime;
             UpdateClawColliders();
 
+            // Check if any claw makes contact during descent
             if (CheckClawContact())
             {
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, grabbableLayer);
-                if (hit.collider != null)
-                {
-                    transform.position = new Vector3(transform.position.x, hit.point.y + 0.1f, transform.position.z);
-                }
-                UpdateClawColliders();
-                Debug.Log("Claw hit something during descent! Stopping.");
-                break;
+                contactMadeDuringDescent = true;
+                Debug.Log("Claw made contact during descent. Attempting grab!");
+                // No 'break' here, we want to continue to the closing phase immediately
             }
 
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.2f);
-
-        float closeSpeed = 100f;
-        float currentAngle = clawOpenAngle;
-
-        while (currentAngle < clawCloseAngle)
+        // Ensure we stop precisely at the targetY if no contact was made
+        if (!contactMadeDuringDescent)
         {
-            currentAngle += closeSpeed * Time.deltaTime;
-            currentAngle = Mathf.Min(currentAngle, clawCloseAngle);
-            SetClawRotation(currentAngle);
+            transform.position = new Vector3(transform.position.x, targetY, transform.position.z);
+            UpdateClawColliders();
+        }
 
-            if (CheckClawContact())
-                break;
+        yield return new WaitForSeconds(0.2f); // Brief pause before closing
 
+        // --- Phase 2: Close Claws (whether contact was made or not) ---
+        float currentClawAngle = clawOpenAngle; // Initialize correctly
+        while (currentClawAngle < clawCloseAngle)
+        {
+            currentClawAngle += clawCloseSpeed * Time.deltaTime;
+            currentClawAngle = Mathf.Min(currentClawAngle, clawCloseAngle);
+            SetClawRotation(currentClawAngle);
+
+            // Attempt to grab if contact is made during closing
+            if (CheckClawContact() && grabbedObject == null) // Only try to grab if not already grabbed
+            {
+                Collider2D[] overlappingColliders = Physics2D.OverlapCircleAll(transform.position, 0.5f, grabbableLayer); // Use crane's position, adjust radius
+                if (overlappingColliders.Length > 0)
+                {
+                    // Attempt to grab the first object found
+                    TryGrabObject(overlappingColliders[0].gameObject);
+                    if (grabbedObject != null)
+                    {
+                        Debug.Log($"Successfully grabbed: {grabbedObject.name}");
+                        // If grabbed, we can break out of the closing loop if we want a quick grab
+                        // Or allow it to fully close to ensure a tight grip
+                        // For "try and grab first", we'll break here
+                        break;
+                    }
+                }
+            }
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.3f);
+        // Ensure claws are fully closed or at the point of grab
+        SetClawRotation(currentClawAngle); // Final snap to closed angle if not broken by grab
 
+        yield return new WaitForSeconds(0.3f); // Brief pause after closing/grab attempt
+
+        // --- Phase 3: Ascend ---
         while (transform.position.y < startPos.y)
         {
             transform.position += Vector3.up * clawMoveSpeed * Time.deltaTime;
             UpdateClawColliders();
+            // Make grabbed object follow crane during ascent (if parented)
+            // If using the parenting method, it will automatically follow.
             yield return null;
         }
 
-        currentAngle = clawCloseAngle;
-
-        while (currentAngle > clawOpenAngle)
-        {
-            currentAngle -= clawOpenSpeed * Time.deltaTime;
-            currentAngle = Mathf.Max(currentAngle, clawOpenAngle);
-            SetClawRotation(currentAngle);
-            yield return null;
-        }
-
-        SetClawRotation(clawOpenAngle);
-
+        // Ensure we are back at the exact starting height
         transform.position = new Vector3(transform.position.x, startPos.y, transform.position.z);
 
-        // Now remove a play
+        // --- Phase 4: Open Claws and Release Grabbed Object ---
+        float currentOpenAngle = clawCloseAngle; // Start from closed
+        while (currentOpenAngle > clawOpenAngle)
+        {
+            currentOpenAngle -= clawOpenSpeed * Time.deltaTime;
+            currentOpenAngle = Mathf.Max(currentOpenAngle, clawOpenAngle);
+            SetClawRotation(currentOpenAngle);
+            yield return null;
+        }
+        SetClawRotation(clawOpenAngle); // Ensure fully open
+
+        // Release the grabbed object here
+        if (grabbedObject != null)
+        {
+            ReleaseGrabbedObject();
+            Debug.Log($"Released: {grabbedObject.name}");
+        }
+
+        // --- Final Cleanup ---
         currentPlays--;
         UpdatePlayDisplay(); // Update the GameObject display
 
@@ -154,19 +191,16 @@ public class CraneController : MonoBehaviour
 
     private void UpdateClawColliders()
     {
-        if (clawLeftCollider != null)
-        {
-            Rigidbody2D rb = clawLeftCollider.GetComponent<Rigidbody2D>();
-            if (rb != null)
-                rb.MovePosition(clawLeft.position);
-        }
+        // Get Rigidbody2D references once if you were to optimize, but this works
+        // for individual calls if components are always present.
+        Rigidbody2D rbLeft = clawLeftCollider.GetComponent<Rigidbody2D>();
+        Rigidbody2D rbRight = clawRightCollider.GetComponent<Rigidbody2D>();
 
-        if (clawRightCollider != null)
-        {
-            Rigidbody2D rb = clawRightCollider.GetComponent<Rigidbody2D>();
-            if (rb != null)
-                rb.MovePosition(clawRight.position);
-        }
+        if (rbLeft != null)
+            rbLeft.MovePosition(clawLeft.position);
+
+        if (rbRight != null)
+            rbRight.MovePosition(clawRight.position);
     }
 
     private bool CheckClawContact()
@@ -187,8 +221,6 @@ public class CraneController : MonoBehaviour
         }
 
         // Calculate the correct index.
-        // If playNumberDisplays[0] is for 0 plays, playNumberDisplays[1] for 1 play, etc.
-        // We now map currentPlays directly to the index.
         int indexToShow = Mathf.Clamp(currentPlays, 0, playNumberDisplays.Length - 1);
 
         // Enable only the GameObject corresponding to the current number of plays
@@ -198,6 +230,56 @@ public class CraneController : MonoBehaviour
             {
                 playNumberDisplays[indexToShow].SetActive(true);
             }
+        }
+    }
+
+    // --- Grab/Release Logic ---
+    private void TryGrabObject(GameObject objToGrab)
+    {
+        // Make sure objToGrab is a grabbable object
+        if (objToGrab == null || ((1 << objToGrab.layer) & grabbableLayer) == 0) return;
+
+        Rigidbody2D objRb = objToGrab.GetComponent<Rigidbody2D>();
+        if (objRb != null)
+        {
+            grabbedObject = objToGrab;
+            // Option A: Parent the object (Simplest, but loses physics interaction while parented)
+            grabbedObject.transform.SetParent(this.transform); // Make the grabbed object a child of the crane
+            objRb.isKinematic = true; // Make it kinematic so it doesn't fall/react to physics while grabbed
+
+            // Option B: Use a FixedJoint2D (More realistic dangling, keeps physics)
+            // FixedJoint2D joint = grabbedObject.AddComponent<FixedJoint2D>();
+            // joint.connectedBody = clawLeftCollider.GetComponent<Rigidbody2D>(); // Connect to one of your claw rigidbodies
+            // joint.breakForce = grabStrength; // How much force it takes to break the joint
+            // You would need to store the joint reference to destroy it later.
+
+            // Optional: Apply visual squish (requires storing original scale somewhere)
+            // originalGrabbedObjectScale = grabbedObject.transform.localScale;
+            // grabbedObject.transform.localScale = new Vector3(originalGrabbedObjectScale.x * 1.1f, originalGrabbedObjectScale.y * 0.9f, 1f);
+        }
+    }
+
+    private void ReleaseGrabbedObject()
+    {
+        if (grabbedObject != null)
+        {
+            // Revert Option A: Unparent and make dynamic again
+            grabbedObject.transform.SetParent(null); // Detach from crane
+            Rigidbody2D objRb = grabbedObject.GetComponent<Rigidbody2D>();
+            if (objRb != null)
+            {
+                objRb.isKinematic = false; // Let it fall/react to physics again
+                objRb.AddForce(Vector2.up * 5f, ForceMode2D.Impulse); // A little push to simulate dropping
+            }
+
+            // Revert Option B: Destroy the joint if used
+            // FixedJoint2D joint = grabbedObject.GetComponent<FixedJoint2D>();
+            // if (joint != null) { Destroy(joint); }
+
+            // Optional: Revert visual squish if applied
+            // grabbedObject.transform.localScale = originalGrabbedObjectScale;
+
+            grabbedObject = null; // Clear reference
         }
     }
 }
