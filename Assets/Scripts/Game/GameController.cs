@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameState { FreeRoam, Dialog, Menu }
+public enum GameState { FreeRoam, Dialog, Menu, Interact }
 
 public class GameController : MonoBehaviour
 {
