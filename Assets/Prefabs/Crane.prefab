@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3705904182856908176}
   - component: {fileID: 7721885606665114480}
+  - component: {fileID: 6248953124282051209}
   m_Layer: 0
   m_Name: Crane
   m_TagString: Untagged
@@ -31,8 +32,6 @@ Transform:
   m_Children:
   - {fileID: 9130993635179073902}
   - {fileID: 8368129969126549914}
-  - {fileID: 5779546473539097701}
-  - {fileID: 7658456322039910664}
   - {fileID: 1985813183676915847}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -53,19 +52,33 @@ MonoBehaviour:
   leftLimit: -7
   rightLimit: 7
   maxPlays: 5
-  playNumberDisplays: []
+  clawMechanism: {fileID: 6248953124282051209}
+  playDisplayManager: {fileID: 0}
+--- !u!114 &6248953124282051209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227158733473977603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c8cc9b39d640924eaf9e36ecbd032b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   clawLeft: {fileID: 5779546473539097701}
   clawRight: {fileID: 7658456322039910664}
   clawLeftCollider: {fileID: 3200267483735544542}
   clawRightCollider: {fileID: 8828992235030745623}
-  clawOpenAngle: -30
-  clawCloseAngle: 7
+  clawOpenAngle: 35
+  clawCloseAngle: -7
   clawMoveSpeed: 5
   clawDropDistance: 5
   grabbableLayer:
     serializedVersion: 2
     m_Bits: 256
-  clawOpenSpeed: 50
+  clawOpenCloseSpeed: 50
+  grabStrength: 100
 --- !u!1 &1875846282023223822
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,7 +108,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5779546473539097701}
+  - {fileID: 7658456322039910664}
   m_Father: {fileID: 3705904182856908176}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -202,13 +217,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2449280112016313922}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.663, y: 0.126, z: 0}
+  m_LocalPosition: {x: 0.663, y: 0.12599993, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6274747540512441658}
-  m_Father: {fileID: 3705904182856908176}
-  m_RootOrder: 3
+  m_Father: {fileID: 9130993635179073902}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1621888462429560122
 SpriteRenderer:
@@ -543,13 +558,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6708029688605613367}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.663, y: 0.126, z: 0}
+  m_LocalPosition: {x: -0.663, y: 0.12599993, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4403184119491729828}
-  m_Father: {fileID: 3705904182856908176}
-  m_RootOrder: 2
+  m_Father: {fileID: 9130993635179073902}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1618027926142951695
 SpriteRenderer:
@@ -633,7 +648,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3705904182856908176}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6712690442319769033
 SpriteRenderer:

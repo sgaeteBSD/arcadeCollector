@@ -373,6 +373,11 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!1 &348645513 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6942826955738038429, guid: fcd871908fcb2124e8c9ecf1c332094c, type: 3}
+  m_PrefabInstance: {fileID: 935870424523817358}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &360156723
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,6 +531,32 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5772881313161624678, guid: fcd871908fcb2124e8c9ecf1c332094c, type: 3}
   m_PrefabInstance: {fileID: 935870424523817358}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1211832064 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2580888016992508836, guid: fcd871908fcb2124e8c9ecf1c332094c, type: 3}
+  m_PrefabInstance: {fileID: 935870424523817358}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1211832066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211832064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b88ac974e4286546bf17261d07b49cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playNumberDisplays:
+  - {fileID: 717809290}
+  - {fileID: 392328750}
+  - {fileID: 1849727606}
+  - {fileID: 1154884771}
+  - {fileID: 1920593357}
+  - {fileID: 1736930571}
+  - {fileID: 348645513}
+  - {fileID: 1989890882}
 --- !u!1 &1227671628
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,6 +705,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8191323613658159183, guid: fcd871908fcb2124e8c9ecf1c332094c, type: 3}
   m_PrefabInstance: {fileID: 935870424523817358}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1989890882 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7767601004193932883, guid: fcd871908fcb2124e8c9ecf1c332094c, type: 3}
+  m_PrefabInstance: {fileID: 935870424523817358}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &935870424523817358
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -687,7 +723,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5814006367540045412, guid: fcd871908fcb2124e8c9ecf1c332094c, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5814006367540045412, guid: fcd871908fcb2124e8c9ecf1c332094c, type: 3}
       propertyPath: m_LocalScale.x
@@ -754,6 +790,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crane
       objectReference: {fileID: 0}
+    - target: {fileID: 1635042546567398480, guid: 4190052569f4a5a4a92312fb1a06d348, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3705904182856908176, guid: 4190052569f4a5a4a92312fb1a06d348, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -808,8 +848,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7721885606665114480, guid: 4190052569f4a5a4a92312fb1a06d348, type: 3}
       propertyPath: maxPlays
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 7721885606665114480, guid: 4190052569f4a5a4a92312fb1a06d348, type: 3}
+      propertyPath: playDisplayManager
+      value: 
+      objectReference: {fileID: 1211832066}
     - target: {fileID: 7721885606665114480, guid: 4190052569f4a5a4a92312fb1a06d348, type: 3}
       propertyPath: playNumberDisplays.Array.size
       value: 6
