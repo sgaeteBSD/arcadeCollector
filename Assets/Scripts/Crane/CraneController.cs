@@ -1,8 +1,5 @@
-// Scripts/Crane/CraneController.cs
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-// No longer needs UnityEngine.UI if PlayDisplayManager handles it
 
 public class CraneController : MonoBehaviour
 {
@@ -16,9 +13,7 @@ public class CraneController : MonoBehaviour
     private int currentPlays;
 
     [Header("References")]
-    // Reference to the new ClawMechanism script (on this same GameObject)
-    public ClawController clawMechanism;
-    // Reference to the PlayDisplayManager script (can be on another GameObject)
+    public ClawController clawController;
     public PlayDisplayManager playDisplayManager;
 
     private bool isDropping = false; // Flag to prevent re-triggering drop
@@ -31,10 +26,10 @@ public class CraneController : MonoBehaviour
         {
             playDisplayManager.UpdateDisplay(currentPlays);
         }
-        // Ensure claws are open at game start (delegate to ClawMechanism)
-        if (clawMechanism != null)
+        // Ensure claws are open at game start (delegate to ClawController)
+        if (clawController != null)
         {
-            clawMechanism.SetClawOpen();
+            clawController.SetClawOpen();
         }
     }
 
@@ -66,47 +61,62 @@ public class CraneController : MonoBehaviour
     {
         isDropping = true;
 
-        // Store the crane's initial Y position before dropping
-        float initialCraneY = transform.position.y;
+        float initialCraneY = transform.position.y; // Crane's initial Y position
+        IEnumerator clawCycle = clawController.DropAndGrab(initialCraneY, rightLimit, moveSpeed);
 
-        // Pass control to the ClawMechanism to handle the entire drop sequence
         GameObject grabbedItem = null;
-        if (clawMechanism != null)
+        while (clawCycle.MoveNext())
         {
-            // Call the ClawMechanism coroutine
-            IEnumerator clawDropEnumerator = clawMechanism.DropAndGrab(initialCraneY);
-
-            // Iterate through the ClawMechanism's coroutine
-            while (clawDropEnumerator.MoveNext())
+            if (clawCycle.Current is GameObject obj)
             {
-                // If the current element yielded by ClawMechanism is a GameObject,
-                // it's our grabbed object.
-                if (clawDropEnumerator.Current is GameObject obj)
-                {
-                    grabbedItem = obj;
-                }
-                yield return clawDropEnumerator.Current; // Yield whatever ClawMechanism yields (null or WaitForSeconds)
+                grabbedItem = obj;
             }
-            // After the loop, 'grabbedItem' will hold the final object returned by ClawMechanism.
+            yield return clawCycle.Current;
         }
+        Vector3 targetDropPosition = new Vector3(rightLimit, transform.position.y, transform.position.z);
+
+        // --- NEW: Prize Delivery Phase ---
+        if (grabbedItem != null) // Only perform if an item was grabbed
+        {
+            Debug.Log($"Grabbed {grabbedItem.name}. Moving to prize drop zone.");
+
+            // Move to the right end slowly
+            yield return new WaitForSeconds(0.3f); // Short pause to see
+            clawController.ReleaseGrabbedObject(grabbedItem); // Release the item
+            while (Vector3.Distance(transform.position, targetDropPosition) > 0.1f) // Move until very close
+            {
+                transform.position = Vector3.MoveTowards(transform.position, targetDropPosition, moveSpeed * Time.deltaTime);
+                ClampPosition(); // Ensure it stays within bounds during move
+                yield return null; // Wait for next frame
+            }
+            transform.position = targetDropPosition; // Snap to exact target
+            Debug.Log($"Reached drop zone. Releasing {grabbedItem.name}.");
+            if (clawController != null)
+            {
+                yield return new WaitForSeconds(0.4f); // Short pause to see the drop
+                clawController.SetClawOpen();
+            }
+            yield return new WaitForSeconds(0.5f); // Short pause to see the drop
+        }
+        else
+        {
+            clawController.SetClawOpen();
+            yield return new WaitForSeconds(0.3f); // Short pause to see
+            while (Vector3.Distance(transform.position, targetDropPosition) > 0.1f) // Move until very close
+            {
+                transform.position = Vector3.MoveTowards(transform.position, targetDropPosition, moveSpeed * Time.deltaTime);
+                ClampPosition(); // Ensure it stays within bounds during move
+                yield return null; // Wait for next frame
+            }
+            transform.position = targetDropPosition; // Snap to exact target
+        }
+        // --- END NEW PRIZE DELIVERY PHASE ---
 
         // After the claws have completed their cycle (returned to top and opened)
         currentPlays--;
         if (playDisplayManager != null)
         {
             playDisplayManager.UpdateDisplay(currentPlays);
-        }
-
-        // Handle the grabbed item here (e.g., score points, move to prize chute)
-        if (grabbedItem != null)
-        {
-            Debug.Log($"Crane completed cycle. Grabbed: {grabbedItem.name}. Now handling prize delivery.");
-            // Example: If you have a prize chute, move it there.
-            // For now, ClawMechanism will handle releasing it.
-            if (clawMechanism != null)
-            {
-                clawMechanism.ReleaseGrabbedObject(grabbedItem); // Explicitly release it here after use
-            }
         }
 
         isDropping = false;
