@@ -14,31 +14,25 @@ public class CraneController : MonoBehaviour
 
     [Header("References")]
     public ClawController clawController;
-    public PlayDisplayManager playDisplayManager;
+    public PlayDisplayManager playDisplayManager; // Assuming this script exists
 
     private bool isDropping = false; // Flag to prevent re-triggering drop
 
     private void Start()
     {
         currentPlays = maxPlays;
-        // Initial display update
         if (playDisplayManager != null)
         {
             playDisplayManager.UpdateDisplay(currentPlays);
         }
-        // Ensure claws are open at game start (delegate to ClawController)
-        if (clawController != null)
-        {
-            clawController.SetClawOpen();
-        }
+        // ClawController's Awake already handles setting claws open
     }
 
     private void Update()
     {
-        // Prevent horizontal movement and dropping if currently dropping or out of plays
         if (isDropping || currentPlays <= 0) return;
 
-        // Horizontal movement
+        // Horizontal movement of the entire crane mechanism
         float h = Input.GetAxisRaw("Horizontal");
         transform.position += Vector3.right * h * moveSpeed * Time.deltaTime;
         ClampPosition();
@@ -61,58 +55,27 @@ public class CraneController : MonoBehaviour
     {
         isDropping = true;
 
-        float initialCraneY = transform.position.y; // Crane's initial Y position
+        float initialCraneY = transform.position.y;
+
+        // This will now handle the entire drop, grab, ascent, and move-to-drop-zone sequence
         IEnumerator clawCycle = clawController.DropAndGrab(initialCraneY, rightLimit, moveSpeed);
 
         GameObject grabbedItem = null;
         while (clawCycle.MoveNext())
         {
+            // Check if the enumerator yielded a GameObject (the grabbed item)
             if (clawCycle.Current is GameObject obj)
             {
                 grabbedItem = obj;
             }
-            yield return clawCycle.Current;
+            yield return clawCycle.Current; // Continue the ClawController's coroutine
         }
-        Vector3 targetDropPosition = new Vector3(rightLimit, transform.position.y, transform.position.z);
 
-        // --- NEW: Prize Delivery Phase ---
-        if (grabbedItem != null) // Only perform if an item was grabbed
-        {
-            Debug.Log($"Grabbed {grabbedItem.name}. Moving to prize drop zone.");
+        // After claw cycle, check what was actually grabbed
+        // The ClawController's DropAndGrab coroutine will yield the grabbed item at the end
+        // if it was successfully held until the end of the prize delivery.
+        // We can also directly ask the ClawController if it still holds something.
 
-            // Move to the right end slowly
-            yield return new WaitForSeconds(0.3f); // Short pause to see
-            clawController.ReleaseGrabbedObject(grabbedItem); // Release the item
-            while (Vector3.Distance(transform.position, targetDropPosition) > 0.1f) // Move until very close
-            {
-                transform.position = Vector3.MoveTowards(transform.position, targetDropPosition, moveSpeed * Time.deltaTime);
-                ClampPosition(); // Ensure it stays within bounds during move
-                yield return null; // Wait for next frame
-            }
-            transform.position = targetDropPosition; // Snap to exact target
-            Debug.Log($"Reached drop zone. Releasing {grabbedItem.name}.");
-            if (clawController != null)
-            {
-                yield return new WaitForSeconds(0.4f); // Short pause to see the drop
-                clawController.SetClawOpen();
-            }
-            yield return new WaitForSeconds(0.5f); // Short pause to see the drop
-        }
-        else
-        {
-            clawController.SetClawOpen();
-            yield return new WaitForSeconds(0.3f); // Short pause to see
-            while (Vector3.Distance(transform.position, targetDropPosition) > 0.1f) // Move until very close
-            {
-                transform.position = Vector3.MoveTowards(transform.position, targetDropPosition, moveSpeed * Time.deltaTime);
-                ClampPosition(); // Ensure it stays within bounds during move
-                yield return null; // Wait for next frame
-            }
-            transform.position = targetDropPosition; // Snap to exact target
-        }
-        // --- END NEW PRIZE DELIVERY PHASE ---
-
-        // After the claws have completed their cycle (returned to top and opened)
         currentPlays--;
         if (playDisplayManager != null)
         {

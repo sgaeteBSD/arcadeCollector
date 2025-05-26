@@ -9,6 +9,9 @@ public class PageController : MonoBehaviour
     [SerializeField] private Transform modelParent;
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private TMP_Text descText;
+    [SerializeField] private TMP_Text genText;
+    [SerializeField] private TMP_Text foundText;
+    [SerializeField] private Material silhouetteMaterial;
 
     private GameObject currentModel;
     public void SetPage(CarouselItemData data)
@@ -22,6 +25,15 @@ public class PageController : MonoBehaviour
             currentModel = Instantiate(data.largeModel, modelParent);
             currentModel.transform.localScale = Vector3.one * 1f; //adjust scale here
             currentModel.transform.localPosition = Vector3.zero; //adjust positioning
+
+            var swapper = currentModel.GetComponent<MaterialSwapper>();
+            if (swapper != null)
+            {
+                if (data.isObtained)
+                    swapper.RestoreMaterials();
+                else
+                    swapper.SetSilhouette(silhouetteMaterial);
+            }
         }
         if (data.isObtained)
         {
@@ -29,12 +41,16 @@ public class PageController : MonoBehaviour
             //mainImage.color = Color.white;
             nameText.text = data.name;
             descText.text = data.desc;
+            foundText.text = data.found;
+            genText.text = data.gen;
         }
         else
         {
             //mainImage.texture = data.largeModelTex;
             //mainImage.color = Color.black; //image.color = new Color(0, 0, 0, 0.5f)
             nameText.text = "???";
+            foundText.text = "???";
+            genText.text = data.gen;
             descText.text = data.hint;
         }
     }
