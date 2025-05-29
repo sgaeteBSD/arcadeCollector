@@ -322,7 +322,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 3
 --- !u!233 &7603977805543154055
 HingeJoint2D:
   m_ObjectHideFlags: 0
@@ -337,7 +337,7 @@ HingeJoint2D:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: -0.35559887, y: -0.014996422}
+  m_Anchor: {x: -0.67722595, y: 0.0014550824}
   m_ConnectedAnchor: {x: 0.720393, y: 0.0011663437}
   m_UseMotor: 1
   m_Motor:
@@ -372,10 +372,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.0044604093, y: -1.1880267}
-      - {x: -0.1789222, y: -1.1441834}
-      - {x: -0.1411119, y: -1.3140472}
-      - {x: 0.26755306, y: -1.3169316}
+    - - {x: 0.08487883, y: -1.195089}
+      - {x: -0.23032844, y: -1.2293063}
+      - {x: 0.11066231, y: -1.3034538}
+      - {x: 0.39750096, y: -1.2357142}
       - {x: 0.7111498, y: -0.88952875}
       - {x: 1.0005147, y: -0.60515547}
       - {x: 0.99893224, y: -0.31476662}
@@ -385,7 +385,7 @@ PolygonCollider2D:
       - {x: 0.57064915, y: -0.54736996}
       - {x: 0.5534239, y: -0.65688056}
       - {x: 0.49443617, y: -0.7727263}
-      - {x: 0.20291722, y: -1.080076}
+      - {x: 0.29225647, y: -1.0624199}
 --- !u!1 &4100709358550903805
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,7 +577,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 3
 --- !u!233 &2919345524868317986
 HingeJoint2D:
   m_ObjectHideFlags: 0
@@ -635,10 +635,10 @@ PolygonCollider2D:
       - {x: -0.68799186, y: -0.33690932}
       - {x: -0.6848237, y: -0.62746245}
       - {x: -0.34792286, y: -0.94811773}
-      - {x: 0.067968965, y: -1.322171}
-      - {x: 0.46383193, y: -1.317731}
-      - {x: 0.51342535, y: -1.1545687}
-      - {x: 0.3431442, y: -1.2052795}
+      - {x: -0.0091308355, y: -1.2725091}
+      - {x: 0.15828833, y: -1.2978665}
+      - {x: 0.551738, y: -1.2265781}
+      - {x: 0.22321126, y: -1.1779655}
       - {x: 0.12587392, y: -1.1026742}
 --- !u!1 &7399419603679362027
 GameObject:

@@ -6,11 +6,13 @@ public class ClawController : MonoBehaviour
     [Header("Claw Parts")]
     public Transform clawLeft;
     public Transform clawRight;
+
     [Header("Claw Joint Settings")]
-    public Transform clawPivotPoint; // The central pivot point for both claws (an empty GameObject likely)
-    public float clawOpenAngle = 35f;   // Angle for HingeJoint2D limits (adjust if your setup is different)
-    public float clawCloseAngle = -7f;  // Angle for HingeJoint2D limits (adjust if your setup is different)
-    public float clawOpenCloseSpeed = 100f; // degrees per second for opening/closing
+    public Transform clawPivotPoint;
+    public float clawOpenAngle = 95f;   
+    public float clawCloseAngle = -7f;  
+    public float clawOpenCloseSpeed = 100f; 
+
     [Header("Claw Movement (Crane Body)")]
     public float verticalMoveSpeed = 5f; // Vertical speed (descent/ascent)
     public float maxDropDistance = 5f; // Max distance claws can drop from crane body
@@ -18,14 +20,14 @@ public class ClawController : MonoBehaviour
     public float grabForceMagnitude = 1000f; // Force applied when trying to grab
     public float jointBreakForce = 100f; // Force at which the DistanceJoint2D breaks
     public float jointBreakTorque = 100f; // Torque at which the DistanceJoint2D breaks
+
     public LayerMask grabbableLayer;
+
     // Private references for physics components
     private Rigidbody2D rbLeftClaw;
     private Rigidbody2D rbRightClaw;
     private HingeJoint2D hingeLeftClaw;
     private HingeJoint2D hingeRightClaw;
-    private DistanceJoint2D grabbedObjectJoint; // The joint connecting the object to the claw
-    private GameObject currentGrabbedObject = null;
     private bool isClawClosing = false; // To manage closing state
     private bool isClawOpening = false; // To manage opening state
     private void Awake()
@@ -64,30 +66,23 @@ public class ClawController : MonoBehaviour
     {
         if (isClawClosing)
         {
-            float targetAngle = clawCloseAngle;
+            float targetAngle = clawCloseAngle*1.3f;
             float currentAngleLeft = hingeLeftClaw.jointAngle;
             float currentAngleRight = hingeRightClaw.jointAngle;
             // Apply motor force to close claws if not already at limit
-            if (Mathf.Abs(currentAngleLeft - targetAngle) > 0.1f) // Check if close enough to target to stop motor
+            if (Mathf.Abs(currentAngleLeft - targetAngle) > 0.1f)
             {
                 hingeLeftClaw.motor = new JointMotor2D { motorSpeed = -clawOpenCloseSpeed, maxMotorTorque = grabForceMagnitude };
                 hingeLeftClaw.useMotor = true;
             }
-            else
-            {
-                hingeLeftClaw.useMotor = false;
-            }
+
             // Note the negative for right claw's motorSpeed and target angle comparison
             if (Mathf.Abs(currentAngleRight - (-targetAngle)) > 0.1f)
             {
                 hingeRightClaw.motor = new JointMotor2D { motorSpeed = clawOpenCloseSpeed, maxMotorTorque = grabForceMagnitude };
                 hingeRightClaw.useMotor = true;
             }
-            else
-            {
-                hingeRightClaw.useMotor = false;
-            }
-            // If a grabbed object exists, maintain the joint (this will be handled by DistanceJoint2D)
+
         }
         else if (isClawOpening)
         {
@@ -144,7 +139,7 @@ public class ClawController : MonoBehaviour
         SetClawClosed();
         float grabAttemptDuration = 1.0f; // How long to try and grab for
         float timer = 0f;
-        while (timer < grabAttemptDuration && currentGrabbedObject == null)
+        while (timer < grabAttemptDuration)
         {
             timer += Time.deltaTime;
             yield return null;

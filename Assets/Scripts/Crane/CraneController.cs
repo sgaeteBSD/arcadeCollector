@@ -14,7 +14,7 @@ public class CraneController : MonoBehaviour
 
     [Header("References")]
     public ClawController clawController;
-    public PlayDisplayManager playDisplayManager; // Assuming this script exists
+    public PlayDisplayManager playDisplayManager;
 
     private bool isDropping = false; // Flag to prevent re-triggering drop
 
@@ -70,11 +70,6 @@ public class CraneController : MonoBehaviour
             }
             yield return clawCycle.Current; // Continue the ClawController's coroutine
         }
-
-        // After claw cycle, check what was actually grabbed
-        // The ClawController's DropAndGrab coroutine will yield the grabbed item at the end
-        // if it was successfully held until the end of the prize delivery.
-        // We can also directly ask the ClawController if it still holds something.
 
         currentPlays--;
         if (playDisplayManager != null)
