@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5b311d72d1486704c992540e3d907db8
+guid: 79ee5684dcafa5a418091c1f968e2426
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -108,51 +108,11 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
-    vertices:
-    - {x: 0, y: 0}
-    - {x: 720, y: 0}
-    - {x: 0, y: 720}
-    - {x: 720, y: 720}
-    indices: 000000000200000001000000010000000200000003000000
-    edges:
-    - {x: 0, y: 1}
-    - {x: 0, y: 2}
-    - {x: 1, y: 3}
-    - {x: 2, y: 3}
-    weights:
-    - weight[0]: 0
-      weight[1]: 0
-      weight[2]: 0
-      weight[3]: 0
-      boneIndex[0]: 0
-      boneIndex[1]: 0
-      boneIndex[2]: 0
-      boneIndex[3]: 0
-    - weight[0]: 0
-      weight[1]: 0
-      weight[2]: 0
-      weight[3]: 0
-      boneIndex[0]: 0
-      boneIndex[1]: 0
-      boneIndex[2]: 0
-      boneIndex[3]: 0
-    - weight[0]: 0
-      weight[1]: 0
-      weight[2]: 0
-      weight[3]: 0
-      boneIndex[0]: 0
-      boneIndex[1]: 0
-      boneIndex[2]: 0
-      boneIndex[3]: 0
-    - weight[0]: 0
-      weight[1]: 0
-      weight[2]: 0
-      weight[3]: 0
-      boneIndex[0]: 0
-      boneIndex[1]: 0
-      boneIndex[2]: 0
-      boneIndex[3]: 0
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
     secondaryTextures: []
     nameFileIdTable: {}
   spritePackingTag: 
