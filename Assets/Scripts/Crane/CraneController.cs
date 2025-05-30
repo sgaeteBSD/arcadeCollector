@@ -78,7 +78,7 @@ public class CraneController : MonoBehaviour
 
         isDropping = false;
 
-        if (currentPlays <= 0)
+        if ((currentPlays <= 0) && (!grabbedItem || !grabbedItem.CompareTag("Prize")))
         {
             Debug.Log("Out of plays. Reset level!");
             // TODO: Add game over or restart logic here
@@ -88,6 +88,7 @@ public class CraneController : MonoBehaviour
     }
     public void ResetCrane()
     {
+        LevelMan.Instance.InstantiateLevel();
         currentPlays = maxPlays;
         if (playDisplayManager != null)
         {

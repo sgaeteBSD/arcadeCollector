@@ -7,6 +7,7 @@ public class LevelMan : MonoBehaviour
     public CraneController craneController;
     [Header("Level Management")]
     public static GameObject selectedLevelPrefab; // Now static!
+    public static Vector3 levelPosition;
     public static int levelPlays;
     private GameObject currentLevelInstance;
 
@@ -34,6 +35,6 @@ public class LevelMan : MonoBehaviour
             Destroy(currentLevelInstance);
         }
 
-        currentLevelInstance = Instantiate(selectedLevelPrefab, Vector3.zero, Quaternion.identity);
+        currentLevelInstance = Instantiate(selectedLevelPrefab, levelPosition, Quaternion.identity);
     }
 }

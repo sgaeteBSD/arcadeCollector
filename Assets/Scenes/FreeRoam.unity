@@ -230,6 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craneSceneName: CraneGame
   levelPrefab: {fileID: 6490011675256434496, guid: f85651695f7da7d479e7333daaeedc72, type: 3}
+  levelPosition: {x: 0, y: 0, z: 0}
   plays: 3
 --- !u!61 &160711116
 BoxCollider2D:
@@ -6886,8 +6887,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   craneSceneName: CraneGame
-  levelPrefab: {fileID: 4745636076381939596, guid: 47a9ab35140fcc44abe7f6bbb735379f, type: 3}
-  plays: 6
+  levelPrefab: {fileID: 7744319107835861082, guid: 85956f81a0e273441ac58145a6f19a1f, type: 3}
+  levelPosition: {x: 0, y: 1.5, z: 0}
+  plays: 5
 --- !u!61 &1075562583
 BoxCollider2D:
   m_ObjectHideFlags: 0
