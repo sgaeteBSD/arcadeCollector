@@ -26,6 +26,7 @@ public class ClawController : MonoBehaviour
     public float grabForceMagnitude = 1000f; // Force applied when trying to grab
     public float jointBreakForce = 100f; // Force at which the DistanceJoint2D breaks
     public float jointBreakTorque = 100f; // Torque at which the DistanceJoint2D breaks
+    public float boxCastHalfWidth = 0.1f; // Controls the 'width' of your descent check
 
     [Header("SFX")]
     [SerializeField] private AudioClip clawCloseSFX;
@@ -167,11 +168,16 @@ public class ClawController : MonoBehaviour
         while (transform.position.y > targetY)
         {
             // Raycast downwards from the pivot point to detect obstacles
-            RaycastHit2D hit = Physics2D.Raycast(clawPivotPoint.position, Vector2.down, pivotRaycastDistance, obstacleLayer);
+            RaycastHit2D hit = Physics2D.BoxCast(
+                clawPivotPoint.position,                      // Origin of the box
+                new Vector2(boxCastHalfWidth * 2, 0.05f),     // Size of the box (width, height). Height can be small.
+                0f,                                           // Angle of the box (0 for no rotation)
+                Vector2.down,                                 // Direction of the cast
+                pivotRaycastDistance,                         // Distance to cast
+                obstacleLayer                                 // LayerMask to hit
+            );
 
             // For debugging purposes, draw the ray in the editor
-            Debug.DrawRay(clawPivotPoint.position, Vector2.down * pivotRaycastDistance, Color.red);
-
             if (hit.collider != null)
             {
                 Debug.Log($"Claw pivot hit: {hit.collider.name}. Stopping descent.");

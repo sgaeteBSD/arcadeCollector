@@ -51,6 +51,12 @@ public class ClawGameCon : MonoBehaviour
         {
             craneController.HandleUpdate();
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            // TODO: Add game over or restart logic here
+            LevelMan.Instance.InstantiateLevel();
+            craneController.ResetCrane();
+        }
     }
 
     public void SetCraneState(CraneState newState)

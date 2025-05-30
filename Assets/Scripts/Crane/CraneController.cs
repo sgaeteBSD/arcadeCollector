@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CraneController : MonoBehaviour
@@ -39,6 +40,12 @@ public class CraneController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && currentPlays > 0)
         {
             StartCoroutine(PerformDropSequence());
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            // TODO: Add game over or restart logic here
+            LevelMan.Instance.InstantiateLevel();
+            ResetCrane();
         }
     }
 
@@ -81,9 +88,6 @@ public class CraneController : MonoBehaviour
         if ((currentPlays <= 0) && (!grabbedItem || !grabbedItem.CompareTag("Prize")))
         {
             Debug.Log("Out of plays. Reset level!");
-            // TODO: Add game over or restart logic here
-            LevelMan.Instance.InstantiateLevel();
-            ResetCrane();
         }
     }
     public void ResetCrane()

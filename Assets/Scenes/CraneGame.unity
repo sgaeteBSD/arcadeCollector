@@ -3057,7 +3057,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.01659584, y: -3.5215282}
+  m_Offset: {x: 3.030017, y: -3.5215282}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3068,7 +3068,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 17.828918, y: 2.327406}
+  m_Size: {x: 27.434195, y: 2.327406}
   m_EdgeRadius: 0
 --- !u!4 &1505904761
 Transform:
@@ -4305,6 +4305,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundFXManager
       objectReference: {fileID: 0}
+    - target: {fileID: 302157544786393477, guid: d9e1191fc362de54c934f498429b0751, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9e1191fc362de54c934f498429b0751, type: 3}
 --- !u!1001 &935870424523817358
@@ -4458,6 +4462,10 @@ PrefabInstance:
     - target: {fileID: 2716308498181981593, guid: 4190052569f4a5a4a92312fb1a06d348, type: 3}
       propertyPath: jointBreakForce
       value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2716308498181981593, guid: 4190052569f4a5a4a92312fb1a06d348, type: 3}
+      propertyPath: boxCastHalfWidth
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2716308498181981593, guid: 4190052569f4a5a4a92312fb1a06d348, type: 3}
       propertyPath: jointBreakTorque
