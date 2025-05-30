@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 
@@ -59,6 +58,7 @@ public class PrizeDetector : MonoBehaviour
     }
     private IEnumerator ModelPopup(PrizeInfo prizeInfo)
     {
+        CollectionManager.Instance.AddPrize(prizeInfo.prizeID);
         SoundFXManager.Instance.PlaySFXClip(popInSound, transform, 0.8f);
 
         yield return new WaitForSeconds(0.2f);
@@ -94,6 +94,7 @@ public class PrizeDetector : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         SoundFXManager.Instance.StopMusic();
+
         FadeManager.Instance.FadeToScene("FreeRoam");
     }
 

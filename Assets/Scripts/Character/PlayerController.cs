@@ -5,8 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance { get; private set; }
 
-    
+    void Awake()
+    {
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        if (SceneManager.GetActiveScene().name == "CraneGame")
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
     private Vector2 input;
 
     private Character character;

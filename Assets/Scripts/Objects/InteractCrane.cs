@@ -12,6 +12,7 @@ public class InteractCrane : MonoBehaviour, Interactable
     {
         if (GameController.Instance.State == GameState.FreeRoam)
         {
+            SoundFXManager.Instance.StopMusic();
             LevelMan.selectedLevelPrefab = levelPrefab;
             LevelMan.levelPosition = levelPosition;
             LevelMan.levelPlays = plays;

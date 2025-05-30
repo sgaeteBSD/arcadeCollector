@@ -18,6 +18,7 @@ public class CarouselUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        CollectionManager.Instance.LoadCollection(); // ensure fresh load
         Redraw();
         UpdatePage();
     }
@@ -64,8 +65,15 @@ public class CarouselUI : MonoBehaviour
 
             if (index >= 0 && index < items.Count)
             {
-                img.sprite = items[index].smallSprite;
-                img.color = Color.white;
+                var item = items[index];
+                bool collected = CollectionManager.Instance.HasPrize(item.itemID); // Ensure CarouselItemData has an itemID field
+                if (collected)
+                {
+                    item.isObtained = true;
+                }
+
+                img.sprite = collected ? item.smallSprite : item.silhouetteSprite;
+                img.color = collected ? Color.white : new Color(0, 0, 0, 0.5f); // Slight dimming for unobtained
             }
             else
             {

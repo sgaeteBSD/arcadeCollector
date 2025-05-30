@@ -11,6 +11,8 @@ public class CarouselItemData
     public string hint;
     public string found;
     public Sprite smallSprite;
+    public Sprite silhouetteSprite;
+    public string itemID;
     public GameObject largeModel;
     public bool isObtained;
 }
