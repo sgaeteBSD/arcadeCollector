@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FreeRoam.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/CraneGame.unity
+    guid: b21112a0383ff264d9b373cde28c3014
   m_configObjects: {}

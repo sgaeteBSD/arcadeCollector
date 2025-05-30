@@ -28,21 +28,20 @@ public class CraneController : MonoBehaviour
         // ClawController's Awake already handles setting claws open
     }
 
-    private void Update()
+    public void HandleUpdate()
     {
         if (isDropping || currentPlays <= 0) return;
 
-        // Horizontal movement of the entire crane mechanism
         float h = Input.GetAxisRaw("Horizontal");
         transform.position += Vector3.right * h * moveSpeed * Time.deltaTime;
         ClampPosition();
 
-        // Drop initiation
         if (Input.GetKeyDown(KeyCode.Space) && currentPlays > 0)
         {
             StartCoroutine(PerformDropSequence());
         }
     }
+
 
     private void ClampPosition()
     {
@@ -83,6 +82,16 @@ public class CraneController : MonoBehaviour
         {
             Debug.Log("Out of plays. Reset level!");
             // TODO: Add game over or restart logic here
+            LevelMan.Instance.InstantiateLevel();
+            ResetCrane();
+        }
+    }
+    public void ResetCrane()
+    {
+        currentPlays = maxPlays;
+        if (playDisplayManager != null)
+        {
+            playDisplayManager.UpdateDisplay(currentPlays);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,12 +15,18 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        character = GetComponent<Character>(); 
+        character = GetComponent<Character>();
     }
 
     // Update is called once per frame
     public void HandleUpdate()
     {
+        if (SceneManager.GetActiveScene().name == "CraneGame")
+            this.gameObject.SetActive(false);
+        else
+        {
+            this.gameObject.SetActive(true);
+        }
         if (!character.IsMoving)
         {
             //raw means val is always -1 or 1 (good for grid movement)

@@ -27,6 +27,12 @@ public class ClawController : MonoBehaviour
     public float jointBreakForce = 100f; // Force at which the DistanceJoint2D breaks
     public float jointBreakTorque = 100f; // Torque at which the DistanceJoint2D breaks
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip clawCloseSFX;
+    [SerializeField] private AudioClip craneDownSFX;
+    [SerializeField] private AudioClip craneReleaseSFX;
+
+
     public LayerMask grabbableLayer;
 
     // Private references for physics components
@@ -36,6 +42,8 @@ public class ClawController : MonoBehaviour
     private HingeJoint2D hingeRightClaw;
     private bool isClawClosing = false; // To manage closing state
     private bool isClawOpening = false; // To manage opening state
+
+
 
     private void Awake()
     {
@@ -142,6 +150,7 @@ public class ClawController : MonoBehaviour
     public void SetClawClosed()
     {
         isClawOpening = false;
+        SoundFXManager.Instance.PlaySFXClip(clawCloseSFX, transform, 0.7f);
         isClawClosing = true;
     }
 
@@ -150,6 +159,8 @@ public class ClawController : MonoBehaviour
     {
         float targetY = craneInitialY - maxDropDistance;
         SetClawOpen();
+        AudioSource descentAudio = SoundFXManager.Instance.PlaySFXClip(craneDownSFX, transform, 1f);
+
         yield return new WaitForSeconds(0.1f); // Short delay to allow open state to apply
 
         // --- Phase 1: Descent ---
@@ -164,11 +175,18 @@ public class ClawController : MonoBehaviour
             if (hit.collider != null)
             {
                 Debug.Log($"Claw pivot hit: {hit.collider.name}. Stopping descent.");
+                Destroy(descentAudio.gameObject);
+
                 break; // Stop descent if an obstacle is hit
-            }
+        }
+
 
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, targetY, transform.position.z), verticalMoveSpeed * Time.deltaTime);
-            yield return null;
+        yield return null;
+    }
+        if (descentAudio)
+        {
+            Destroy(descentAudio.gameObject);
         }
 
         // Snap to the stopped position if the loop broke due to hitting an object,
@@ -192,6 +210,7 @@ public class ClawController : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
 
         // --- Phase 3: Ascent with or without grabbed object ---
+        AudioSource descentAudio2 = SoundFXManager.Instance.PlaySFXClip(craneDownSFX, transform, 0.7f);
         while (transform.position.y < craneInitialY)
         {
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, craneInitialY, transform.position.z), verticalMoveSpeed * Time.deltaTime);
@@ -208,10 +227,12 @@ public class ClawController : MonoBehaviour
             yield return null;
         }
         transform.position = targetDropPosition;
+        Destroy(descentAudio2.gameObject);
         yield return new WaitForSeconds(0.5f);
 
         // --- Phase 5: Release Object and Open Claws ---
         yield return new WaitForSeconds(0.2f);
+        SoundFXManager.Instance.PlaySFXClip(craneReleaseSFX, transform, 1f);
         SetClawOpen();
         yield return new WaitForSeconds(0.5f);
     }
