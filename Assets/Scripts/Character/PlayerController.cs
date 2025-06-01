@@ -55,20 +55,20 @@ public class PlayerController : MonoBehaviour
 
     public void HandleUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && leaving == false)
+        if (Input.GetKeyDown(KeyCode.Escape) && leaving == false && SceneManager.GetActiveScene().name == "FreeRoam")
         {
             leaving = true;
             SoundFXManager.Instance.StopMusic();
             FadeManager.Instance.FadeToScene("StartScene");
         }
-        if (SceneManager.GetActiveScene().name == "CraneGame" || SceneManager.GetActiveScene().name == "StartScene")
-            SoundFXManager.Instance.StopMusic();
+        if (SceneManager.GetActiveScene().name == "CraneGame" || SceneManager.GetActiveScene().name == "StartScene") ;
+        //SoundFXManager.Instance.StopMusic();
         else
         {
             this.gameObject.SetActive(true);
         }
 
-        if (!character.IsMoving)
+        if (!character.IsMoving && SceneManager.GetActiveScene().name == "FreeRoam")
         {
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");

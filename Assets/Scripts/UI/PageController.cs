@@ -29,7 +29,14 @@ public class PageController : MonoBehaviour
                 currentModel.transform.localPosition = new Vector3(0.25f,3.6f,0f); //adjust positioning
             }
             else {
-            currentModel.transform.localPosition = Vector3.zero; //adjust positioning
+                if (data.gen == "GAMERS")
+                {
+                    currentModel.transform.localPosition = new Vector3(0.25f, 0f, 0f); //adjust positioning
+                }
+                else
+                {
+                    currentModel.transform.localPosition = Vector3.zero; //adjust positioning
+                }
             }
 
             var swapper = currentModel.GetComponent<MaterialSwapper>();

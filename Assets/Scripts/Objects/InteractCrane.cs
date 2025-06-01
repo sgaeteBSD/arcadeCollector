@@ -16,8 +16,8 @@ public class InteractCrane : MonoBehaviour, Interactable
     {
         if (GameController.Instance.State == GameState.FreeRoam && leaving == false)
         {
-            leaving = true;
             SoundFXManager.Instance.StopMusic();
+            leaving = true;
             LevelMan.selectedLevelPrefab = levelPrefab;
             LevelMan.levelPosition = levelPosition;
             LevelMan.rayWidth = rayWidth;
@@ -26,6 +26,7 @@ public class InteractCrane : MonoBehaviour, Interactable
             LevelMan.levelPlays = plays;
             // Begin loading the crane game scene
             FadeManager.Instance.FadeToScene(craneSceneName);
+            PlayerController.Instance.leaving = false;
         }
     }
 }
