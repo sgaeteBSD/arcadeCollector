@@ -11,6 +11,7 @@ public class CarouselUI : MonoBehaviour
     [SerializeField] private int visibleSlots = 7; //make sure this is odd
     [SerializeField] private List<CarouselItemData> items;
     [SerializeField] private PageController pageController;
+    [SerializeField] private AudioClip pageS;
 
     private int selectedIndex = 0;
     private List<GameObject> currentSlots = new List<GameObject>();
@@ -30,6 +31,8 @@ public class CarouselUI : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
+            SoundFXManager.Instance.PlaySFXClip(pageS, transform, 0.85f);
+
             if (selectedIndex < items.Count - 1)
             {
                 selectedIndex++;
@@ -39,6 +42,8 @@ public class CarouselUI : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
+            SoundFXManager.Instance.PlaySFXClip(pageS, transform, 0.85f);
+
             if (selectedIndex > 0)
             {
                 selectedIndex--;
@@ -82,7 +87,7 @@ public class CarouselUI : MonoBehaviour
             }
 
             //scale selected
-            float scale = (i == 0) ? 1.2f : 0.8f;
+            float scale = (i == 0) ? 1.4f : 0.8f;
             slotGO.transform.localScale = Vector3.one * scale;
             currentSlots.Add(slotGO);
         }

@@ -10,6 +10,7 @@ public class CarouselItemData
     public string desc;
     public string hint;
     public string found;
+    public bool ud;
     public Sprite smallSprite;
     public Sprite silhouetteSprite;
     public string itemID;

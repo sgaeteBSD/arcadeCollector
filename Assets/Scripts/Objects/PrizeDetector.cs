@@ -68,7 +68,15 @@ public class PrizeDetector : MonoBehaviour
         modelRoot.SetActive(true);
         currentModel = Instantiate(prizeInfo.model, modelRoot.transform);
         currentModel.transform.localScale = Vector3.one * 1f; //adjust scale here
-        currentModel.transform.localPosition = Vector3.zero; //adjust positioning
+        currentModel.transform.localScale = Vector3.one * 1f; //adjust scale here
+        if (prizeInfo.ud == true)
+        {
+            currentModel.transform.localPosition = new Vector3(0.25f, 3.6f, 0f); //adjust positioning
+        }
+        else
+        {
+            currentModel.transform.localPosition = Vector3.zero; //adjust positioning
+        }
 
         StartCoroutine(ScalePopIn(modelRoot.transform, 0.3f));
         StartCoroutine(ScalePopIn(popBurst.transform, 0.3f));

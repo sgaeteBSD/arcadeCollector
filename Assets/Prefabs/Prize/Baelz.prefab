@@ -353,4 +353,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prizeName: Hakos Baelz
   prizeID: Baelz
+  ud: 1
   model: {fileID: 2550856153411040676, guid: 6a22377b2f6365d42b89653a6f578179, type: 3}

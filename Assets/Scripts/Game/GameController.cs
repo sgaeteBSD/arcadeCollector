@@ -7,7 +7,7 @@ public enum GameState { FreeRoam, Dialog, Menu, Interact }
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] PlayerController playerController;
+    [SerializeField] public PlayerController playerController;
     [SerializeField] Camera worldCamera;
 
     GameState state;
@@ -16,7 +16,15 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if (!Instance)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Start is called before the first frame update

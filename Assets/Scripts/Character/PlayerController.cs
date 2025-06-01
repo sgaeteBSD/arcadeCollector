@@ -10,11 +10,18 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(gameObject);
-
         if (SceneManager.GetActiveScene().name == "CraneGame")
         {
             gameObject.SetActive(false);
+        }
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
         }
     }
 
@@ -24,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         character = GetComponent<Character>();
     }

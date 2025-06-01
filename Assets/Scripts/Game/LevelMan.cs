@@ -9,6 +9,8 @@ public class LevelMan : MonoBehaviour
     public static GameObject selectedLevelPrefab; // Now static!
     public static Vector3 levelPosition;
     public static int levelPlays;
+    public static float rayDist;
+    public static float leftLimit;
     private GameObject currentLevelInstance;
 
     private void Awake()
@@ -20,6 +22,8 @@ public class LevelMan : MonoBehaviour
     {
         InstantiateLevel();
         craneController.maxPlays = levelPlays;
+        craneController.leftLimit = leftLimit;
+        craneController.clawController.pivotRaycastDistance = rayDist;
     }
 
     public void InstantiateLevel()

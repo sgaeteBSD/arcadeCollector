@@ -1276,8 +1276,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1300,7 +1300,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -4464,8 +4464,12 @@ PrefabInstance:
       value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 2716308498181981593, guid: 4190052569f4a5a4a92312fb1a06d348, type: 3}
+      propertyPath: maxDropDistance
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2716308498181981593, guid: 4190052569f4a5a4a92312fb1a06d348, type: 3}
       propertyPath: boxCastHalfWidth
-      value: 1.5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2716308498181981593, guid: 4190052569f4a5a4a92312fb1a06d348, type: 3}
       propertyPath: jointBreakTorque
@@ -4485,7 +4489,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2716308498181981593, guid: 4190052569f4a5a4a92312fb1a06d348, type: 3}
       propertyPath: pivotRaycastDistance
-      value: 0.5
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 2716308498181981593, guid: 4190052569f4a5a4a92312fb1a06d348, type: 3}
       propertyPath: grabDetectorTransform
@@ -4710,6 +4714,10 @@ PrefabInstance:
     - target: {fileID: 7721885606665114480, guid: 4190052569f4a5a4a92312fb1a06d348, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7721885606665114480, guid: 4190052569f4a5a4a92312fb1a06d348, type: 3}
+      propertyPath: rightLimit
+      value: 6.57
       objectReference: {fileID: 0}
     - target: {fileID: 7721885606665114480, guid: 4190052569f4a5a4a92312fb1a06d348, type: 3}
       propertyPath: clawMechanism

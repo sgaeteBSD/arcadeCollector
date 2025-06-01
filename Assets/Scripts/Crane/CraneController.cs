@@ -59,6 +59,11 @@ public class CraneController : MonoBehaviour
 
     private IEnumerator PerformDropSequence()
     {
+        currentPlays--;
+        if (playDisplayManager != null)
+        {
+            playDisplayManager.UpdateDisplay(currentPlays);
+        }
         isDropping = true;
 
         float initialCraneY = transform.position.y;
@@ -77,12 +82,6 @@ public class CraneController : MonoBehaviour
             yield return clawCycle.Current; // Continue the ClawController's coroutine
         }
 
-        currentPlays--;
-        if (playDisplayManager != null)
-        {
-            playDisplayManager.UpdateDisplay(currentPlays);
-        }
-
         isDropping = false;
 
         if ((currentPlays <= 0) && (!grabbedItem || !grabbedItem.CompareTag("Prize")))
@@ -92,6 +91,8 @@ public class CraneController : MonoBehaviour
     }
     public void ResetCrane()
     {
+        StopCoroutine(PerformDropSequence());
+        transform.position = new Vector3(rightLimit, 3.5f, 0f);
         LevelMan.Instance.InstantiateLevel();
         currentPlays = maxPlays;
         if (playDisplayManager != null)

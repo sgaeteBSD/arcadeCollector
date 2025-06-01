@@ -24,7 +24,13 @@ public class PageController : MonoBehaviour
         {
             currentModel = Instantiate(data.largeModel, modelParent);
             currentModel.transform.localScale = Vector3.one * 1f; //adjust scale here
+            if (data.ud == true) 
+            {
+                currentModel.transform.localPosition = new Vector3(0.25f,3.6f,0f); //adjust positioning
+            }
+            else {
             currentModel.transform.localPosition = Vector3.zero; //adjust positioning
+            }
 
             var swapper = currentModel.GetComponent<MaterialSwapper>();
             if (swapper != null)
@@ -32,7 +38,7 @@ public class PageController : MonoBehaviour
                 if (data.isObtained)
                     swapper.RestoreMaterials();
                 else
-                    swapper.SetSilhouette(silhouetteMaterial);
+                    swapper.SetSilhouette();
             }
         }
         if (data.isObtained)

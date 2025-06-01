@@ -8,13 +8,13 @@ public class Character : MonoBehaviour
 {
     CharacterAnimator animator;
     public float moveSpeed;
-    public bool IsMoving { get; private set; }  
+    public bool IsMoving { get; private set; }
 
     private void Awake()
     {
         animator = GetComponent<CharacterAnimator>();
     }
-    public IEnumerator Move(Vector2 moveVec, Action OnMoveOver=null) //coroutine
+    public IEnumerator Move(Vector2 moveVec, Action OnMoveOver = null) //coroutine
     {
         animator.MoveX = Mathf.Clamp(moveVec.x, -1f, 1f);
         animator.MoveY = Mathf.Clamp(moveVec.y, -1f, 1f);

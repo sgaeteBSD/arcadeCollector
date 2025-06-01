@@ -36,7 +36,7 @@ public class ClawGameCon : MonoBehaviour
     private IEnumerator EnterSelectState()
     {
         yield return new WaitForSeconds(1f); // short delay for transition or animation
-        SetCraneState(CraneState.Select);
+        SetCraneState(CraneState.Play);
     }
 
 
@@ -63,15 +63,6 @@ public class ClawGameCon : MonoBehaviour
     {
         state = newState;
 
-        // Show/hide UI based on state
-        if (state == CraneState.Select)
-        {
-            selectMenuUI.SetActive(true);
-        }
-        else
-        {
-            selectMenuUI.SetActive(false);
-        }
     }
 
     private void OnStartGame()

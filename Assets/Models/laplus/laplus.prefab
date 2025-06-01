@@ -800,3 +800,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a1a070e3837f654e93bc12e8b00a28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swapMaterial: {fileID: 2100000, guid: 70b0bff0a8c889c4b8c3c846eb8621f0, type: 2}
