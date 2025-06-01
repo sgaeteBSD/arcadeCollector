@@ -31,7 +31,7 @@ public class PageController : MonoBehaviour
             else {
                 if (data.gen == "GAMERS")
                 {
-                    currentModel.transform.localPosition = new Vector3(0.25f, 0f, 0f); //adjust positioning
+                    currentModel.transform.localPosition = new Vector3(0, 0f, 0f); //adjust positioning
                 }
                 else
                 {

@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: korohair
+  m_Name: protohair
   m_Shader: {fileID: -6465566751694194690, guid: 1da5640cb6252a641b2a3e21ed9c7fec, type: 3}
   m_ValidKeywords:
   - BACKFACE_NORMAL_MODE_MIRROR
@@ -56,7 +56,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 038665251df73a242b02e12ca0973b2a, type: 3}
+        m_Texture: {fileID: 2800000, guid: c701b275f3b93554a947262544c70fc7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:

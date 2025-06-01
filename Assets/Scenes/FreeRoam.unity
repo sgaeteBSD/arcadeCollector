@@ -2712,11 +2712,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3610923022332811682, guid: 7c2f636e7cd30ff42a92447c458be296, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.08
+      value: -1.4200001
       objectReference: {fileID: 0}
     - target: {fileID: 3610923022332811682, guid: 7c2f636e7cd30ff42a92447c458be296, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.53
+      value: 9.78
       objectReference: {fileID: 0}
     - target: {fileID: 3610923022332811682, guid: 7c2f636e7cd30ff42a92447c458be296, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2936,8 +2936,8 @@ MonoBehaviour:
   items:
   - name: Sakura Miko
     gen: Generation 0
-    desc: The elite shrine maiden.
-    hint: ELITE
+    desc: The elite. She's been turned... marketable.
+    hint: Look for a pink crane game!
     found: 'Found: Pink Crane Game'
     ud: 0
     smallSprite: {fileID: 21300000, guid: 5b311d72d1486704c992540e3d907db8, type: 3}
@@ -2947,8 +2947,8 @@ MonoBehaviour:
     isObtained: 0
   - name: La+ Darknesss
     gen: Secret Society holoX
-    desc: An alien from planet Laplaton.
-    hint: YMD!
+    desc: Describe my oshi with just two lines... YMD
+    hint: This one's suuuuper cute. I'm not biased.
     found: 'Found: Purple Crane Game'
     ud: 0
     smallSprite: {fileID: 21300000, guid: dff6912729d4f08488e44a8cb4fda775, type: 3}
@@ -2956,10 +2956,21 @@ MonoBehaviour:
     itemID: Laplus
     largeModel: {fileID: 6526787078546860638, guid: 06e8a6ac4f8fd204ca254e525883f408, type: 3}
     isObtained: 0
+  - name: Inugami Korone
+    gen: GAMERS
+    desc: Wowowow! I lost a few fingers writing this.
+    hint: This dog is in another castle.
+    found: 'Found: Brown Crane Game'
+    ud: 0
+    smallSprite: {fileID: 21300000, guid: 1c9ec3750e783474bb3e1b73fead22b9, type: 3}
+    silhouetteSprite: {fileID: 21300000, guid: 1c9ec3750e783474bb3e1b73fead22b9, type: 3}
+    itemID: Korone
+    largeModel: {fileID: 7902718500358014860, guid: 09c44ea30779e3545a4e73f31fd50d1f, type: 3}
+    isObtained: 0
   - name: Otonose Kanade
     gen: 'DEV_IS: ReGLOSS'
-    desc: Kanade............................................................................................
-    hint: I really, really hate mondays.
+    desc: It's Monday, somewhere in the world. Go to work!
+    hint: "UKNOWIMSAYIN\xBF"
     found: 'Found: Yellow Crane Game'
     ud: 0
     smallSprite: {fileID: 21300000, guid: c5b14a2f8471c1f4eb48f96360fc665b, type: 3}
@@ -2969,7 +2980,7 @@ MonoBehaviour:
     isObtained: 0
   - name: Hakos Baelz
     gen: EN -Promise-
-    desc: Chaos, end of ends. Also Mr. Squeaks
+    desc: Chaos, end of ends.        And also Mr. Squeaks.
     hint: Trapped in a cage of ice.
     found: 'Found: Red Crane Game'
     ud: 1
@@ -2978,17 +2989,17 @@ MonoBehaviour:
     itemID: Baelz
     largeModel: {fileID: 2550856153411040676, guid: 6a22377b2f6365d42b89653a6f578179, type: 3}
     isObtained: 0
-  - name: Inugami Korone
-    gen: GAMERS
-    desc: Wan wan!
-    hint: This dog is in another castle.
-    found: 'Found: Brown Crane Game'
-    ud: 1
-    smallSprite: {fileID: 21300000, guid: 1c9ec3750e783474bb3e1b73fead22b9, type: 3}
-    silhouetteSprite: {fileID: 21300000, guid: 1c9ec3750e783474bb3e1b73fead22b9, type: 3}
-    itemID: Korone
-    largeModel: {fileID: 7902718500358014860, guid: 09c44ea30779e3545a4e73f31fd50d1f, type: 3}
-    isObtained: 1
+  - name: Prototype Plush
+    gen: Holo Plush Arcade
+    desc: I mean, this has to be a knockoff, right?
+    hint: Someone around here's gotta know, right?
+    found: 'Found: Collection Completion'
+    ud: 0
+    smallSprite: {fileID: 21300000, guid: 7874aa5fad5142c4bab9ed08aaba639c, type: 3}
+    silhouetteSprite: {fileID: 21300000, guid: 7874aa5fad5142c4bab9ed08aaba639c, type: 3}
+    itemID: Proto
+    largeModel: {fileID: 2929711113691322710, guid: b0ffd9be87c247b4cbbf8a423a07f808, type: 3}
+    isObtained: 0
   pageController: {fileID: 1746318176}
   pageS: {fileID: 8300000, guid: cf6027b63dd01fb4394fea20963459cd, type: 3}
 --- !u!213 &304624691
@@ -13972,12 +13983,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   craneSceneName: CraneGame
-  levelPrefab: {fileID: 4805639512385221786, guid: f97e5222c7d79a94c899cdc22bdf3385, type: 3}
-  levelPosition: {x: -1, y: -1, z: 0}
-  leftLimit: -5
-  rayDist: 1.1
-  rayWidth: 2.5
-  plays: 1
+  levelPrefab: {fileID: 1501249883391481798, guid: 1876fea5a910db04288e419c1a40dd32, type: 3}
+  levelPosition: {x: 7, y: 2, z: 0}
+  leftLimit: -5.2
+  rayDist: 1
+  rayWidth: 1.75
+  plays: 2
 --- !u!61 &928439277
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -15106,7 +15117,7 @@ MonoBehaviour:
   levelPosition: {x: 0, y: 1.5, z: 0}
   leftLimit: 2.3
   rayDist: 0.6
-  rayWidth: 2.5
+  rayWidth: 2
   plays: 4
 --- !u!61 &1075562583
 BoxCollider2D:
