@@ -8,6 +8,7 @@ public enum GameState { FreeRoam, Dialog, Menu, Interact }
 public class GameController : MonoBehaviour
 {
     [SerializeField] public PlayerController playerController;
+    [SerializeField] public DialogueManager dg;
     [SerializeField] Camera worldCamera;
 
     GameState state;
@@ -24,6 +25,20 @@ public class GameController : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+        if (Instance != null && Instance != this) Destroy(gameObject);
+        else Instance = this;
+        DontDestroyOnLoad(gameObject); // Assuming GameController also persists
+
+        // It's safer to get the DialogueManager instance here after it's established
+        // rather than relying on AddPlayer to assign it.
+        if (dg == null) // Only find if not already assigned in Inspector
+        {
+            dg = DialogueManager.Instance; // Get the persistent DialogueManager
+        }
+        if (dg == null)
+        {
+            Debug.LogError("GameController: DialogueManager instance is null after Awake. Make sure it's present and set up correctly.", this);
         }
     }
 
@@ -63,6 +78,11 @@ public class GameController : MonoBehaviour
     public void SetGameState(GameState newState)
     {
         state = newState;
+    }
+
+    public void SetDialogMan(DialogueManager newState)
+    {
+        dg = newState;
     }
 
     public GameState State => state;

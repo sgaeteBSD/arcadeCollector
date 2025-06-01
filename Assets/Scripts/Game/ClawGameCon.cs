@@ -11,6 +11,7 @@ public class ClawGameCon : MonoBehaviour
 
     [Header("Game State")]
     private CraneState state;
+    private bool leaving = false;
     public CraneState State => state;
     public CraneController craneController;
 
@@ -21,9 +22,10 @@ public class ClawGameCon : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-    }
+        leaving = false;
+}
 
-    private void Start()
+private void Start()
     {
         Instance = this;
 
@@ -42,10 +44,11 @@ public class ClawGameCon : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && leaving == false)
         {
             SoundFXManager.Instance.StopMusic();
             FadeManager.Instance.FadeToScene("FreeRoam");
+            leaving = true;
         }
         if (state == CraneState.Play)
         {

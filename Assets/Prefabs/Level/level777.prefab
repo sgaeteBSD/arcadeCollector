@@ -105,8 +105,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 259798773
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0d39399499647a047ac3bb7803d41b93, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -543,11 +543,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4628656658471505348, guid: b9f4cbbeaa908e74789dd802d1b007e1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.7270058
+      value: 0.9270058
       objectReference: {fileID: 0}
     - target: {fileID: 4628656658471505348, guid: b9f4cbbeaa908e74789dd802d1b007e1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.7270058
+      value: 0.9270058
       objectReference: {fileID: 0}
     - target: {fileID: 4628656658471505348, guid: b9f4cbbeaa908e74789dd802d1b007e1, type: 3}
       propertyPath: m_LocalScale.z
@@ -555,11 +555,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4628656658471505348, guid: b9f4cbbeaa908e74789dd802d1b007e1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.168845
+      value: -5.62
       objectReference: {fileID: 0}
     - target: {fileID: 4628656658471505348, guid: b9f4cbbeaa908e74789dd802d1b007e1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.72
+      value: -0.36
       objectReference: {fileID: 0}
     - target: {fileID: 4628656658471505348, guid: b9f4cbbeaa908e74789dd802d1b007e1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -601,6 +601,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 285ed8d1fb89f554897adf6ac39a4ef0, type: 3}
+    - target: {fileID: 9139543863880453614, guid: b9f4cbbeaa908e74789dd802d1b007e1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9139543863880453614, guid: b9f4cbbeaa908e74789dd802d1b007e1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 259798773
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9f4cbbeaa908e74789dd802d1b007e1, type: 3}
 --- !u!4 &4019335837571506768 stripped

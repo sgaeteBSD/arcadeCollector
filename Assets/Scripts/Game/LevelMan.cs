@@ -10,6 +10,7 @@ public class LevelMan : MonoBehaviour
     public static Vector3 levelPosition;
     public static int levelPlays;
     public static float rayDist;
+    public static float rayWidth;
     public static float leftLimit;
     private GameObject currentLevelInstance;
 
@@ -23,6 +24,7 @@ public class LevelMan : MonoBehaviour
         InstantiateLevel();
         craneController.maxPlays = levelPlays;
         craneController.leftLimit = leftLimit;
+        craneController.clawController.boxCastHalfWidth = rayWidth;
         craneController.clawController.pivotRaycastDistance = rayDist;
     }
 

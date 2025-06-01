@@ -37,6 +37,7 @@ public class FadeManager : MonoBehaviour
     public IEnumerator FadeIn()
     {
         yield return StartCoroutine(Fade(1f, 0f)); // Black to transparent
+        PlayerController.Instance.leaving = false;
     }
 
     private IEnumerator Fade(float startAlpha, float endAlpha)

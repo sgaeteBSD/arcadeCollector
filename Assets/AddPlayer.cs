@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AddPlayer : MonoBehaviour
 {
     [SerializeField] public GameObject playerPrefab; // Renamed for clarity
+    [SerializeField] public GameObject startTooltips;
+    [SerializeField] public GameObject dialogueBox;
+    [SerializeField] public Text dtext;
 
     private CinemachineVirtualCamera vcam;
 
     void Start()
     {
         GameObject playerInstance = null;
+        StartCoroutine(tooltipAnimation());
+        if (GameController.Instance.dg.dialogBox == null)
+            GameController.Instance.dg.dialogBox = dialogueBox;
 
+        if (GameController.Instance.dg.dialogText == null)
+            GameController.Instance.dg.dialogText = dtext;
         // 1. Check if a PlayerController instance already exists (from a previous scene load)
         if (PlayerController.Instance != null)
         {
@@ -25,6 +35,9 @@ public class AddPlayer : MonoBehaviour
             playerInstance = Instantiate(playerPrefab);
             Debug.Log("Instantiating new player.");
         }
+
+
+
 
         // 3. Set the Cinemachine camera to follow the (existing or new) player
         vcam = GetComponent<CinemachineVirtualCamera>();
@@ -53,6 +66,14 @@ public class AddPlayer : MonoBehaviour
         else
         {
             Debug.LogWarning("GameController.Instance or PlayerInstance not found. Cannot assign player controller.");
+        }
+
+        IEnumerator tooltipAnimation()
+        {
+            startTooltips.SetActive(true);
+            yield return new WaitForSeconds(3f);
+            yield return null;
+            startTooltips.SetActive(false);
         }
 
         // Optional: If your player always starts at a specific position in this scene

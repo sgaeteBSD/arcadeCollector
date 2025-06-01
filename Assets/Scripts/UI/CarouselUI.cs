@@ -29,7 +29,7 @@ public class CarouselUI : MonoBehaviour
     {
         if (!gameObject.activeInHierarchy) return;
 
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             SoundFXManager.Instance.PlaySFXClip(pageS, transform, 0.85f);
 
@@ -40,7 +40,7 @@ public class CarouselUI : MonoBehaviour
                 UpdatePage();
             }
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.A))
         {
             SoundFXManager.Instance.PlaySFXClip(pageS, transform, 0.85f);
 
