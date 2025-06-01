@@ -105,6 +105,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionPromptSpriteObject: {fileID: 3963009536242684175}
+  interacty: {fileID: 8300000, guid: fe241eebd49f67d44be164a2120fab5e, type: 3}
+  leaving: 0
 --- !u!114 &1939775693252111358
 MonoBehaviour:
   m_ObjectHideFlags: 0

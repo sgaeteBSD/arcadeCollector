@@ -44,7 +44,7 @@ private void Start()
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && leaving == false)
+        if (Input.GetKeyDown(KeyCode.Tab) && leaving == false)
         {
             SoundFXManager.Instance.StopMusic();
             FadeManager.Instance.FadeToScene("FreeRoam");

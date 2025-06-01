@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
     // Changed from Image to GameObject for the sprite prompt
     [SerializeField] private GameObject interactionPromptSpriteObject; // Assign this in the Inspector!
+    [SerializeField] private AudioClip interacty;
     public bool leaving;
 
     void Awake()
@@ -55,13 +56,13 @@ public class PlayerController : MonoBehaviour
 
     public void HandleUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && leaving == false && SceneManager.GetActiveScene().name == "FreeRoam")
+        if (Input.GetKeyDown(KeyCode.Tab) && leaving == false && SceneManager.GetActiveScene().name == "FreeRoam")
         {
             leaving = true;
             SoundFXManager.Instance.StopMusic();
             FadeManager.Instance.FadeToScene("StartScene");
         }
-        if (SceneManager.GetActiveScene().name == "CraneGame" || SceneManager.GetActiveScene().name == "StartScene") ;
+        if (SceneManager.GetActiveScene().name == "CraneGame" || SceneManager.GetActiveScene().name == "StartScene");
         //SoundFXManager.Instance.StopMusic();
         else
         {
@@ -102,6 +103,7 @@ public class PlayerController : MonoBehaviour
         if (collider != null)
         {
             collider.GetComponent<Interactable>()?.Interact(transform);
+            SoundFXManager.Instance.PlaySFXClip(interacty, transform, 0.8f);
         }
     }
 

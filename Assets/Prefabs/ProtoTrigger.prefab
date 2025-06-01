@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5539321801934671248
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4975804099213704038}
+  - component: {fileID: 3243055996282680834}
+  m_Layer: 0
+  m_Name: ProtoTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4975804099213704038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5539321801934671248}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.2271495, y: 17.335026, z: -0.04447454}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3243055996282680834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5539321801934671248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88122ad6b2947fc47805c435afade8d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popCan: {fileID: 0}
+  popBurst: {fileID: 0}
+  popText: {fileID: 0}
+  modelRoot: {fileID: 0}
+  prizeToPopup: {fileID: 711863483136578450, guid: 409316a2eb4a9ad41b242e12fac2ba67, type: 3}
+  popInSound: {fileID: 8300000, guid: 15b0c1977fcf8a44abb69a0adafc2659, type: 3}
+  popOutSound: {fileID: 8300000, guid: ce1c596d07cebfa49b011cd1860ad2ba, type: 3}
+  sfxSource: {fileID: 0}
+  spinTime: 4
+  spinDegrees: 320

@@ -11,6 +11,7 @@ public class AddPlayer : MonoBehaviour
     [SerializeField] public GameObject startTooltips;
     [SerializeField] public GameObject dialogueBox;
     [SerializeField] public Text dtext;
+    [SerializeField] public GameObject oldNPC;
 
     private CinemachineVirtualCamera vcam;
 
@@ -23,6 +24,8 @@ public class AddPlayer : MonoBehaviour
 
         if (GameController.Instance.dg.dialogText == null)
             GameController.Instance.dg.dialogText = dtext;
+
+        //assign it
         // 1. Check if a PlayerController instance already exists (from a previous scene load)
         if (PlayerController.Instance != null)
         {

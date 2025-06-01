@@ -51,10 +51,10 @@ public class OpacityPulseAll : MonoBehaviour
         while (true)
         {
             // Fade from 0.25 alpha to 1 alpha
-            yield return StartCoroutine(FadeAlpha(0.5f, 0.75f, fadeInDuration));
+            yield return StartCoroutine(FadeAlpha(0.0f, 0.75f, fadeInDuration));
 
             // Fade from 1 alpha to 0.25 alpha
-            yield return StartCoroutine(FadeAlpha(0.75f, 0.5f, fadeOutDuration));
+            yield return StartCoroutine(FadeAlpha(0.75f, 0.0f, fadeOutDuration));
         }
     }
 

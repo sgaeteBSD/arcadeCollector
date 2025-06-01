@@ -28,6 +28,7 @@ public class PrizeDetector : MonoBehaviour
         popBurst.SetActive(false);
         popText.SetActive(false);
     }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         ProcessPrize(other.gameObject);
