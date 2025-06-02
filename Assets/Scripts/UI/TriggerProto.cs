@@ -1,17 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System; // For PrizeInfo if it's in the same file
+using System;
 
-// You should have a PrizeInfo class defined somewhere, for example:
-// [Serializable]
-// public class PrizeInfo
-// {
-//     public string prizeID;
-//     public GameObject model; // The 3D model prefab for the prize
-//     public bool ud; // Unsure what 'ud' means, assuming a boolean flag
-//     // Add any other prize-related data here
-// }
 
 
 public class TriggerProto : MonoBehaviour
@@ -22,11 +13,11 @@ public class TriggerProto : MonoBehaviour
     public GameObject modelRoot;
     private GameObject currentModel;
 
-    // --- Specific Prize Info field for this TriggerProto instance ---
+   
     [Header("Prize Info to Trigger")]
     [Tooltip("Assign the specific PrizeInfo (ID, Model, etc.) that this popup will display.")]
-    [SerializeField] private PrizeInfo prizeToPopup; // Assign this in the Inspector!
-    // --- End Specific Prize Info field ---
+    [SerializeField] private PrizeInfo prizeToPopup;
+    
 
     [Header("Sound Effects")]
     [SerializeField] private AudioClip popInSound;
@@ -63,7 +54,7 @@ public class TriggerProto : MonoBehaviour
             return;
         }
 
-        // --- CHANGE THIS LINE ---
+
         if (CollectionManager.Instance != null)
         {
             CollectionManager.Instance.StartManagedCoroutine(ModelPopup(prizeToPopup));
@@ -71,8 +62,7 @@ public class TriggerProto : MonoBehaviour
         else
         {
             Debug.LogError("CollectionManager.Instance is null! Cannot start ModelPopup coroutine.", this);
-            // Fallback: If CollectionManager isn't available, try to start it on this if it's active.
-            // This makes the original problem resurface, but it's a good fallback for non-persistent cases.
+            
             if (gameObject.activeInHierarchy)
             {
                 StartCoroutine(ModelPopup(prizeToPopup));
@@ -82,7 +72,7 @@ public class TriggerProto : MonoBehaviour
                 Debug.LogError("TriggerProto GameObject is inactive. Cannot start coroutine even as fallback.");
             }
         }
-        // --- END CHANGE ---
+      
     }
 
 

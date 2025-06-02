@@ -7,15 +7,12 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance { get; private set; }
 
-    // Changed from Image to GameObject for the sprite prompt
-    [SerializeField] private GameObject interactionPromptSpriteObject; // Assign this in the Inspector!
-    [SerializeField] private AudioClip interacty;
+    [SerializeField] private GameObject interactionPromptSpriteObject; [SerializeField] private AudioClip interacty;
     public bool leaving;
 
     void Awake()
     {
         leaving = false;
-        // --- Your existing singleton setup (ensure DontDestroyOnLoad is applied if player persists) ---
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -24,17 +21,13 @@ public class PlayerController : MonoBehaviour
         else
         {
             Instance = this;
-            // Example of DontDestroyOnLoad if your PlayerController is meant to persist
-            // DontDestroyOnLoad(gameObject);
         }
 
         if (SceneManager.GetActiveScene().name == "CraneGame")
         {
             gameObject.SetActive(false);
         }
-        // --- End of existing singleton setup ---
 
-        // Ensure the interaction prompt sprite object is initially hidden
         if (interactionPromptSpriteObject != null)
         {
             interactionPromptSpriteObject.SetActive(false);
@@ -62,8 +55,7 @@ public class PlayerController : MonoBehaviour
             SoundFXManager.Instance.StopMusic();
             FadeManager.Instance.FadeToScene("StartScene");
         }
-        if (SceneManager.GetActiveScene().name == "CraneGame" || SceneManager.GetActiveScene().name == "StartScene");
-        //SoundFXManager.Instance.StopMusic();
+        if (SceneManager.GetActiveScene().name == "CraneGame" || SceneManager.GetActiveScene().name == "StartScene") ;
         else
         {
             this.gameObject.SetActive(true);
@@ -83,7 +75,6 @@ public class PlayerController : MonoBehaviour
         }
         character.HandleUpdate();
 
-        // --- NEW LOGIC FOR SHOWING/HIDING INTERACTION PROMPT SPRITE ---
         CheckForInteractablePrompt();
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -107,10 +98,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // New method to manage the interaction prompt sprite's visibility
     private void CheckForInteractablePrompt()
     {
-        // Only proceed if the prompt sprite object is assigned
         if (interactionPromptSpriteObject == null) return;
 
         var facingDir = new Vector3(character.Animator.MoveX, character.Animator.MoveY);
@@ -118,18 +107,15 @@ public class PlayerController : MonoBehaviour
 
         var collider = Physics2D.OverlapCircle(interactPos, 0.3f, GameLayers.i.InteractableLayer);
 
-        // If an interactable object is detected
         if (collider != null && collider.GetComponent<Interactable>() != null)
         {
-            // Show the prompt sprite if it's not already active
             if (!interactionPromptSpriteObject.activeSelf)
             {
                 interactionPromptSpriteObject.SetActive(true);
             }
         }
-        else // No interactable object detected
+        else
         {
-            // Hide the prompt sprite if it's active
             if (interactionPromptSpriteObject.activeSelf)
             {
                 interactionPromptSpriteObject.SetActive(false);

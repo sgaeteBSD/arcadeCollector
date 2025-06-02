@@ -1,12 +1,11 @@
-// Scripts/UI/PlayDisplayManager.cs
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine; // Still needed for MonoBehaviour and GameObject
-using UnityEngine.UI; // Still needed if your playNumberDisplays are UI elements
+using UnityEngine; 
+using UnityEngine.UI; 
 
 public class PlayDisplayManager : MonoBehaviour
 {
-    public GameObject[] playNumberDisplays; // Assign 0 to maxPlays GameObjects here
+    public GameObject[] playNumberDisplays; //
 
     public void UpdateDisplay(int currentPlays)
     {

@@ -16,8 +16,8 @@ public class ClawGameCon : MonoBehaviour
     public CraneController craneController;
 
     [Header("UI")]
-    public GameObject selectMenuUI; // Assign in inspector (the panel)
-    public Button playButton;       // Assign in inspector (the "Start" button)
+    public GameObject selectMenuUI; 
+    public Button playButton;       
 
     private void Awake()
     {
@@ -29,7 +29,7 @@ private void Start()
     {
         Instance = this;
 
-        // Start in "Move" transition state
+        
         SetCraneState(CraneState.Move);
         StartCoroutine(EnterSelectState());
         playButton.onClick.AddListener(OnStartGame);
@@ -37,7 +37,7 @@ private void Start()
 
     private IEnumerator EnterSelectState()
     {
-        yield return new WaitForSeconds(1f); // short delay for transition or animation
+        yield return new WaitForSeconds(1f);
         SetCraneState(CraneState.Play);
     }
 
@@ -56,7 +56,7 @@ private void Start()
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            // TODO: Add game over or restart logic here
+            //game over or restart logic here
             LevelMan.Instance.InstantiateLevel();
             craneController.ResetCrane();
         }

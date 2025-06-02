@@ -1,4 +1,3 @@
-// GrabbableSqueeze.cs
 using UnityEngine;
 using System.Collections;
 
@@ -32,7 +31,7 @@ public class GrabbableSqueeze : MonoBehaviour
         Vector3 targetScale = new Vector3(
             originalScale.x * squeezeScaleFactor,
             originalScale.y * squeezeScaleFactor * squeezeYScaleFactorMultiplier,
-            originalScale.z * squeezeScaleFactor // Assuming 2D, Z might be uniform or originalScale.z
+            originalScale.z * squeezeScaleFactor
         );
         scaleCoroutine = StartCoroutine(AnimateScale(targetScale, squeezeDuration));
     }
@@ -61,7 +60,6 @@ public class GrabbableSqueeze : MonoBehaviour
         scaleCoroutine = null;
     }
 
-    // Call this if the object is destroyed or reset while squeezed
     public void ResetScaleImmediate()
     {
         if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
@@ -69,10 +67,7 @@ public class GrabbableSqueeze : MonoBehaviour
         scaleCoroutine = null;
     }
 
-    // Ensure reset on disable/destroy if it might be grabbed
     void OnDisable()
     {
-        // If you want it to visually reset if it's disabled while grabbed
-        // ResetScaleImmediate();
     }
 }

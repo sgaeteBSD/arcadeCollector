@@ -14,7 +14,7 @@ public class PrizeObj : MonoBehaviour
         {
             Debug.LogError($"Prize '{gameObject.name}' is missing a prizeID! This is required to show the correct 3D model in the UI.", this);
         }
-        if (!CompareTag("Prize")) // Assuming you still use the "Prize" tag for detection
+        if (!CompareTag("Prize"))
         {
             Debug.LogWarning($"Prize '{gameObject.name}' is not tagged as 'Prize'. The PrizeDetector might not pick it up.", this);
         }

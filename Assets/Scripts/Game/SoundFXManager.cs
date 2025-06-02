@@ -47,7 +47,7 @@ public class SoundFXManager : MonoBehaviour
             GameObject musicObject = new GameObject("Music Source");
             musicSource = musicObject.AddComponent<AudioSource>();
             musicSource.loop = loop;
-            DontDestroyOnLoad(musicObject); // Optional: persist across scenes
+            DontDestroyOnLoad(musicObject);
         }
 
         musicSource.clip = musicClip;

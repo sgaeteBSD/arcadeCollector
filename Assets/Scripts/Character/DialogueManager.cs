@@ -1,15 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-// using UnityEditor.Rendering; // This is an editor-only namespace, generally not needed in runtime scripts
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement; // Add this if you need SceneManager for checks
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] public GameObject dialogBox;
-    [SerializeField] public Text dialogText; // Or TextMeshProUGUI
+    [SerializeField] public Text dialogText;
     [SerializeField] int lettersPerSecond;
 
     public event Action OnShowDialog;
@@ -19,28 +18,20 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
-        // --- PROPER SINGLETON WITH DONTDESTROYONLOAD ---
+        //singleton
         if (Instance != null && Instance != this)
         {
-            // An instance already exists, and it's not this one.
-            // This means another DialogueManager (likely the persistent one) is already active.
-            // Destroy this duplicate.
             Destroy(gameObject);
-            return; // Stop execution for this duplicate object
+            return;
         }
         else
         {
-            // This is the first or the persistent instance. Set it.
             Instance = this;
-            // Make sure this object (and its children) persist across scene loads.
             DontDestroyOnLoad(gameObject);
         }
-        // --- END SINGLETON ---
-
-        // Ensure initial state
         if (dialogBox != null)
         {
-            dialogBox.SetActive(false); // Dialogue box should start hidden
+            dialogBox.SetActive(false);
         }
         else
         {
@@ -61,11 +52,9 @@ public class DialogueManager : MonoBehaviour
 
     public IEnumerator ShowDialog(Dialogue dialog, Action onFinished = null)
     {
-        // Optional: Ensure the dialogue box is active before the yield,
-        // so it doesn't flash if there's a frame delay.
         dialogBox.SetActive(true);
 
-        yield return new WaitForEndOfFrame(); // This ensures all UI updates for the current frame are done
+        yield return new WaitForEndOfFrame();
 
         OnShowDialog?.Invoke();
 
@@ -73,8 +62,6 @@ public class DialogueManager : MonoBehaviour
         this.dialog = dialog;
         onDialogFinished = onFinished;
 
-        // StartCoroutine(TypeDialog(dialog.Lines[0]));
-        // Make sure to handle the case where dialog.Lines might be empty to prevent index out of bounds
         if (dialog != null && dialog.Lines != null && dialog.Lines.Count > 0)
         {
             StartCoroutine(TypeDialog(dialog.Lines[0]));
@@ -82,17 +69,16 @@ public class DialogueManager : MonoBehaviour
         else
         {
             Debug.LogWarning("DialogueManager: Attempted to show an empty or null dialogue.", this);
-            EndDialogueImmediate(); // Close if dialogue is empty
+            EndDialogueImmediate(); //close if dialogue is empty
         }
     }
 
     public void HandleUpdate()
     {
-        // Only allow input if dialogue is showing AND not currently typing
         if (isShowing && Input.GetKeyDown(KeyCode.E) && !isTyping)
         {
             ++currentLine;
-            if (dialog != null && dialog.Lines != null && currentLine < dialog.Lines.Count) // Add null checks
+            if (dialog != null && dialog.Lines != null && currentLine < dialog.Lines.Count)
             {
                 StartCoroutine(TypeDialog(dialog.Lines[currentLine]));
             }
@@ -103,11 +89,11 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public IEnumerator TypeDialog(string line) // Renamed parameter from 'dialog' to 'line' for clarity
+    public IEnumerator TypeDialog(string line)
     {
         isTyping = true;
         dialogText.text = "";
-        foreach (var letter in line.ToCharArray()) // Use 'line' parameter
+        foreach (var letter in line.ToCharArray()) 
         {
             dialogText.text += letter;
             yield return new WaitForSeconds(1f / lettersPerSecond);
@@ -115,12 +101,12 @@ public class DialogueManager : MonoBehaviour
         isTyping = false;
     }
 
-    // New helper method to end dialogue cleanly
+   
     private void EndDialogue()
     {
         currentLine = 0;
         isShowing = false;
-        if (dialogBox != null) // Add null check
+        if (dialogBox != null) 
         {
             dialogBox.SetActive(false);
         }
@@ -128,12 +114,11 @@ public class DialogueManager : MonoBehaviour
         OnCloseDialog?.Invoke();
     }
 
-    // For immediate ending if something goes wrong or dialogue is empty
     private void EndDialogueImmediate()
     {
         if (isTyping)
         {
-            StopAllCoroutines(); // Stop any ongoing typing
+            StopAllCoroutines(); 
             isTyping = false;
         }
         EndDialogue();

@@ -169,38 +169,26 @@ public class ClawController : MonoBehaviour
         {
             // Raycast downwards from the pivot point to detect obstacles
             RaycastHit2D hit = Physics2D.BoxCast(
-                clawPivotPoint.position,                      // Origin of the box
-                new Vector2(boxCastHalfWidth * 2, 0.05f),     // Size of the box (width, height). Height can be small.
-                0f,                                           // Angle of the box (0 for no rotation)
-                Vector2.down,                                 // Direction of the cast
-                pivotRaycastDistance,                         // Distance to cast
-                obstacleLayer                                 // LayerMask to hit
+                clawPivotPoint.position, new Vector2(boxCastHalfWidth * 2, 0.05f), 0f, Vector2.down, pivotRaycastDistance, obstacleLayer
+
             );
 
-            // For debugging purposes, draw the ray in the editor
             if (hit.collider != null)
             {
                 Debug.Log($"Claw pivot hit: {hit.collider.name}. Stopping descent.");
                 Destroy(descentAudio.gameObject);
 
                 break; // Stop descent if an obstacle is hit
-        }
+            }
 
 
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, targetY, transform.position.z), verticalMoveSpeed * Time.deltaTime);
-        yield return null;
-    }
+            yield return null;
+        }
         if (descentAudio)
         {
             Destroy(descentAudio.gameObject);
         }
-
-        // Snap to the stopped position if the loop broke due to hitting an object,
-        // otherwise snap to the original targetY if maxDropDistance was reached.
-        // This ensures the crane doesn't "overshoot" when it hits something.
-        // For simplicity, we'll just keep the current position if it stopped due to a hit.
-        // If you want to snap to the hit point, you'd calculate that based on hit.point.y
-        // For now, it simply stops at the position it was in when the raycast hit.
 
         yield return new WaitForSeconds(0.2f);
 

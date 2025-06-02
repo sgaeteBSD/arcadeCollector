@@ -20,7 +20,7 @@ public class FadeManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject); // Optional
+        DontDestroyOnLoad(gameObject);
     }
 
     public void FadeToScene(string sceneName)

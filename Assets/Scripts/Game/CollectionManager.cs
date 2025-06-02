@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.Collections; // Needed for Action
-
+using System.Collections;
 [System.Serializable]
 public class CollectionData
 {
@@ -14,7 +13,6 @@ public class CollectionManager : MonoBehaviour
 {
     public static CollectionManager Instance { get; private set; }
 
-    // --- New setup for tracking specific items ---
     [Tooltip("The specific item IDs required to trigger the NPC spawn.")]
     [SerializeField]
     private List<string> requiredNPCSpawnPrizeIDs = new List<string>
@@ -26,16 +24,12 @@ public class CollectionManager : MonoBehaviour
         "Baelz"
     };
 
-    // An event that other scripts (like your NPC spawner) can subscribe to
     public event Action OnAllRequiredItemsCollected;
-    // --- End new setup ---
 
     private CollectionData data = new CollectionData();
 
     public Coroutine StartManagedCoroutine(IEnumerator coroutine)
     {
-        // This allows other scripts to start a coroutine that will be managed
-        // by the persistent CollectionManager, ensuring it runs.
         return StartCoroutine(coroutine);
     }
 
@@ -60,9 +54,7 @@ public class CollectionManager : MonoBehaviour
             data.collectedPrizeIDs.Add(prizeID);
             SaveCollection();
 
-            // --- New check after adding a prize ---
             CheckForAllRequiredItemsCollected();
-            // --- End new check ---
         }
     }
 
@@ -71,38 +63,32 @@ public class CollectionManager : MonoBehaviour
         return data.collectedPrizeIDs.Contains(prizeID);
     }
 
-    // --- New method to check if all required items are collected ---
     public bool HasAllRequiredNPCSpawnItems()
     {
         foreach (string requiredID in requiredNPCSpawnPrizeIDs)
         {
             if (!data.collectedPrizeIDs.Contains(requiredID))
             {
-                return false; // Found a required item that's not collected
+                return false;
             }
         }
-        return true; // All required items are collected
+        return true;
     }
 
-    // --- New method to trigger the event ---
     private void CheckForAllRequiredItemsCollected()
     {
         if (HasAllRequiredNPCSpawnItems())
         {
-            // Only invoke if there are listeners (subscribers)
             OnAllRequiredItemsCollected?.Invoke();
             Debug.Log("All required NPC spawn items collected! Triggering event.");
-            // You might want to unsubscribe or set a flag here if this event should only fire once
-            // For example: OnAllRequiredItemsCollected = null;
         }
     }
-    // --- End new method ---
 
     public void SaveCollection()
     {
         string json = JsonUtility.ToJson(data);
         PlayerPrefs.SetString("CollectionData", json);
-        PlayerPrefs.Save(); // Ensure data is written to disk immediately
+        PlayerPrefs.Save();
     }
 
     public void LoadCollection()
@@ -111,7 +97,6 @@ public class CollectionManager : MonoBehaviour
         {
             string json = PlayerPrefs.GetString("CollectionData");
             data = JsonUtility.FromJson<CollectionData>(json);
-            // After loading, check if the condition is already met from a previous session
             CheckForAllRequiredItemsCollected();
         }
     }
@@ -121,7 +106,6 @@ public class CollectionManager : MonoBehaviour
         return new List<string>(data.collectedPrizeIDs);
     }
 
-    // Optional: For testing purposes, to reset collected items
     public void ClearCollection()
     {
         data.collectedPrizeIDs.Clear();

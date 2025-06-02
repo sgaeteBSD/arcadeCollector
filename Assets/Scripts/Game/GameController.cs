@@ -28,13 +28,11 @@ public class GameController : MonoBehaviour
         }
         if (Instance != null && Instance != this) Destroy(gameObject);
         else Instance = this;
-        DontDestroyOnLoad(gameObject); // Assuming GameController also persists
+        DontDestroyOnLoad(gameObject); 
 
-        // It's safer to get the DialogueManager instance here after it's established
-        // rather than relying on AddPlayer to assign it.
-        if (dg == null) // Only find if not already assigned in Inspector
+        if (dg == null) 
         {
-            dg = DialogueManager.Instance; // Get the persistent DialogueManager
+            dg = DialogueManager.Instance; 
         }
         if (dg == null)
         {
